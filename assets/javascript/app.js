@@ -1,7 +1,16 @@
 // create array of pre-search
-
+var searchArr =[];
 // create a search button using jquery
-
+$("#btnSearch").on('click', function()
+    {
+    var inputSearch = $("#inputSearch").val();
+    console.log(inputSearch);
+    var queryURL = 'https://api.giphy.com/v1/gifs/search?q='+ inputSearch +'&api_key=xeDhSZfWtTw8VX5iZ4r1d6wSxdNTEhbH';
+    $.ajax({
+            url = queryURL,
+            method : "GET",
+           });
+    });
 // what happen after the button is push
 
 // ajax pull
