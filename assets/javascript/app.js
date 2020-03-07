@@ -1,17 +1,59 @@
-// create array of pre-search
-var searchArr =[];
-// create a search button using jquery
-$("#btnSearch").on('click', function()
+
+var gifArray = ["Final Fantasy 1", "Final Fantasy 2", "Final Fantasy 3", "Final Fantasy 4"];
+
+      
+function displayGif() 
     {
-    var inputSearch = $("#inputSearch").val();
-    console.log(inputSearch);
-    var queryURL = 'https://api.giphy.com/v1/gifs/search?q='+ inputSearch +'&api_key=xeDhSZfWtTw8VX5iZ4r1d6wSxdNTEhbH';
+    var inputSearch = $(this).attr("data-name");
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q="+ inputSearch +"&limit=10&api_key=xeDhSZfWtTw8VX5iZ4r1d6wSxdNTEhbH";
+
     $.ajax({
-            url = queryURL,
-            method : "GET",
-           });
+          url: queryURL,
+          method: "GET"
+        }).then(function(response) {
+                console.log(response);
+                console.log(response.data[0]);
+          
+                for (var i = 0; i< 10; i++)
+                {
+                var gifDiv = $("<div class='gif-10'>");
+                var imgURL = response.data[i].images.fixed_width_still.url;
+                var image = $("<img>").attr("src", imgURL);
+                gifDiv.append(image);
+                $("#movies-view").prepend(gifDiv);
+                };
+          
+            });
+
+    };
+$(".gif-btn").on("click",displayGif);
+//$(document).on("click", ".gif-btn", displayGif);
+
+function renderButtons() 
+    {
+        $("#buttons-view").empty();
+        for (var i = 0; i < gifArray.length; i++) 
+            {
+            var a = $("<button>");
+            a.addClass("gif-btn btn btn-secondary");
+            a.attr("data-name", gifArray[i]);
+            a.text(gifArray[i]);
+            $("#buttons-view").append(a);
+            }
+    };
+
+$("#add-gif").on("click", function(event) 
+    {
+    event.preventDefault();
+    var gifAdd = $("#gif-input").val().trim();
+    gifArray.push(gifAdd);
+    renderButtons();
     });
-// what happen after the button is push
+
+
+
+renderButtons();
+
 
 // ajax pull
 
