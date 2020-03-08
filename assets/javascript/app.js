@@ -5,7 +5,7 @@ var gifArray = ["Cloud Strife ", "Sephiroth", "Tifa Lockhart", "Aerith Gainsboro
 function displayGif() 
     {
     var inputSearch = $(this).attr("data-name");
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q="+ inputSearch +"&limit=10&api_key=xeDhSZfWtTw8VX5iZ4r1d6wSxdNTEhbH";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=FF7_"+ inputSearch +"&limit=10&api_key=xeDhSZfWtTw8VX5iZ4r1d6wSxdNTEhbH";
 
     $.ajax({
           url: queryURL,
@@ -16,25 +16,29 @@ function displayGif()
                 $("#movies-view").empty();
                 for (var i = 0; i< response.data.length; i++)
                 {
-                var imgStill = response.data[i].images.fixed_height_still.url;
-                var imgAnimate = response.data[i].images.fixed_height.url;
-                //$("#movies-view").append("<div class= 'card' style='width: 13rem;'><img id='pix' src=" + imgURL + ">"+"</div>");
-                var image =$("<img>");
-                image.attr("src",imgStill);
-                image.attr("stillData", imgStill);
-                image.attr("animateData", imgAnimate);
-                image.addClass("card");
-                $("#movies-view").append(image);
+                var still = response.data[i].images.fixed_width_still.url;
+                var animate = response.data[i].images.fixed_width.url;
                 var rating = response.data[i].rating;
-                //$("#movies-view").append("<p> Rating: " + rating + "</p>");
+                var title = response.data[i].title;
+                var card = $("<div class='card' style='width; 13rem;'>")
+                var rate = $("<div class='card-body'> <h5>").text("Rating: " + rating);
+                
+                var img = $("<img class='card-img-top'>");
+                img.attr("src", still);
+                img.attr("data-still", still);
+                img.attr("data-animate", animate);
+                img.attr("data-state","still");
+                img.addClass("action");
+                card.append(img);
+                card.append(title);
+                card.append(rate);
+                
+                $("#movies-view").append(card);
 
-                /*
-                var gifDiv = $("<div class= card >");
-                var imgURL = response.data[i].images.fixed_width_still.url;
-                var image = $("<img>").attr("src", imgURL);
-                gifDiv.append(image);
-                $("#movies-view").prepend(gifDiv);
-                */
+                
+
+                //$("#movies-view").append("<div class= 'card' style='width: 13rem;'><img id='pix'src=" + still + ">"+"<div class='card-body'>"+"<h5 class='card-title'>"+"Rating: "+rating+"<button class='btn btn-primary'id='switch'>"+"Action"+"</button>"+"</div>"+ "</div>");
+                
                 };
           
             });
@@ -43,6 +47,17 @@ function displayGif()
 //$(".gif-btn").on("click",displayGif);
 $(document).on("click", ".gif-btn", displayGif);
 
+// This function lets the image click back and forth between still and animated 
+$(document).on("click", ".action", function(){
+    var state = $(this).attr("data-state");
+    if(state == "still"){
+        $(this).attr("src", $(this).data("animate"));
+        $(this).attr("data-state", "animate");
+    } else{
+        $(this).attr("src", $(this).data("still"));
+        $(this).attr("data-state", "still");
+    }
+ })
 
 
 function renderButtons() 
