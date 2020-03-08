@@ -1,5 +1,5 @@
 
-var gifArray = ["Final Fantasy 1", "Final Fantasy 2", "Final Fantasy 3", "Final Fantasy 4"];
+var gifArray = ["Cloud Strife ", "Sephiroth", "Tifa Lockhart", "Aerith Gainsborough","Barret Wallace","Yuffie Kisaragi","Red XIII","Vincent Valentine","Cid Highwind"];
 
       
 function displayGif() 
@@ -13,21 +13,37 @@ function displayGif()
         }).then(function(response) {
                 console.log(response);
                 console.log(response.data[0]);
-          
-                for (var i = 0; i< 10; i++)
+                $("#movies-view").empty();
+                for (var i = 0; i< response.data.length; i++)
                 {
-                var gifDiv = $("<div class='gif-10'>");
+                var imgStill = response.data[i].images.fixed_height_still.url;
+                var imgAnimate = response.data[i].images.fixed_height.url;
+                //$("#movies-view").append("<div class= 'card' style='width: 13rem;'><img id='pix' src=" + imgURL + ">"+"</div>");
+                var image =$("<img>");
+                image.attr("src",imgStill);
+                image.attr("stillData", imgStill);
+                image.attr("animateData", imgAnimate);
+                image.addClass("card");
+                $("#movies-view").append(image);
+                var rating = response.data[i].rating;
+                //$("#movies-view").append("<p> Rating: " + rating + "</p>");
+
+                /*
+                var gifDiv = $("<div class= card >");
                 var imgURL = response.data[i].images.fixed_width_still.url;
                 var image = $("<img>").attr("src", imgURL);
                 gifDiv.append(image);
                 $("#movies-view").prepend(gifDiv);
+                */
                 };
           
             });
 
     };
-$(".gif-btn").on("click",displayGif);
-//$(document).on("click", ".gif-btn", displayGif);
+//$(".gif-btn").on("click",displayGif);
+$(document).on("click", ".gif-btn", displayGif);
+
+
 
 function renderButtons() 
     {
@@ -50,7 +66,7 @@ $("#add-gif").on("click", function(event)
     renderButtons();
     });
 
-
+//$(document).on("click", ".gif-btn", displayGif);
 
 renderButtons();
 
