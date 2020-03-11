@@ -1,0 +1,23 @@
+body
+{
+background-image: url("../images/bg.jpeg");
+background-size: 100% 100%;
+background-position: center;
+background-repeat: no-repeat;
+background-attachment: fixed;
+}
+#pix
+{
+width: 400px;
+height: 200px;
+}
+.card
+{
+    background-image: url("../images/logo2.jpg");     
+}
+.card-body
+{
+    color:lightsalmon;
+    font-size: 30px;
+    text-shadow: 2px 2px black;
+}
