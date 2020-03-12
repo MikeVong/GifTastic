@@ -16,7 +16,7 @@ function displayGif()
                 {
                 console.log(response);
                 console.log(response.data[0]);
-                $("#movies-view").empty();
+                $("#gif-view").empty();
                 for (var i = 0; i< response.data.length; i++)
                 {
                 var still = response.data[i].images.fixed_height_still.url;
@@ -24,7 +24,7 @@ function displayGif()
                 var rating = response.data[i].rating;
                 var card = $("<div class='card'>")
                 var rate = $("<div class='card-body'> <h5>").text("Rating: " + rating);
-                var img = $("<img class='card-img-top' id='pix'>");
+                var img = $("<img class='card-img-top'>");
                 img.attr("src", still);
                 img.attr("data-still", still);
                 img.attr("data-animate", animate);
@@ -32,7 +32,7 @@ function displayGif()
                 img.addClass("action");
                 card.append(img);
                 card.append(rate);
-                $("#movies-view").append(card);
+                $("#gif-view").append(card);
                 };
           
             });
